@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Link} from "react-router-dom";
+import {Shelf} from "../components/Shelf";
 
 export function BookList({ books, moveBook }) {
   return (
@@ -9,114 +10,9 @@ export function BookList({ books, moveBook }) {
       </div>
       <div className="list-books-content">
         <div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Currently Reading</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {
-                  books.filter((book) => book.shelf === "currentlyReading").map((book) => (
-                    <li key={book.id}>
-                      <div className="book">
-                        <div className="book-top">
-                          {book.imageLinks?.smallThumbnail && <div className="book-cover" style={{
-                            width: 128,
-                            height: 193,
-                            backgroundImage: `url(${book.imageLinks.smallThumbnail})`
-                          }}></div>}
-                          <div className="book-shelf-changer">
-                            <select
-                              value={book.shelf}
-                              onChange={(e) => moveBook(book, e.target.value)}
-                            >
-                              <option value="move" disabled>Move to...</option>
-                              <option value="currentlyReading">Currently Reading</option>
-                              <option value="wantToRead">Want to Read</option>
-                              <option value="read">Read</option>
-                              <option value="none">None</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div className="book-title">{book.title}</div>
-                        {book.authors && <div className="book-authors">{book.authors}</div>}
-                      </div>
-                    </li>
-                  ))
-                }
-              </ol>
-            </div>
-          </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Want to Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {
-                  books.filter((book) => book.shelf === "wantToRead").map((book) => (
-                    <li key={book.id}>
-                      <div className="book">
-                        <div className="book-top">
-                          {book.imageLinks?.smallThumbnail && <div className="book-cover" style={{
-                            width: 128,
-                            height: 193,
-                            backgroundImage: `url(${book.imageLinks.smallThumbnail})`
-                          }}></div>}
-                          <div className="book-shelf-changer">
-                            <select
-                              value={book.shelf}
-                              onChange={(e) => moveBook(book, e.target.value)}
-                            >
-                              <option value="move" disabled>Move to...</option>
-                              <option value="currentlyReading">Currently Reading</option>
-                              <option value="wantToRead">Want to Read</option>
-                              <option value="read">Read</option>
-                              <option value="none">None</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div className="book-title">{book.title}</div>
-                        {book.authors && <div className="book-authors">{book.authors}</div>}
-                      </div>
-                    </li>
-                  ))
-                }
-              </ol>
-            </div>
-          </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {
-                  books.filter((book) => book.shelf === "read").map((book) => (
-                    <li key={book.id}>
-                      <div className="book">
-                        <div className="book-top">
-                          {book.imageLinks?.smallThumbnail && <div className="book-cover" style={{
-                            width: 128,
-                            height: 193,
-                            backgroundImage: `url(${book.imageLinks.smallThumbnail})`
-                          }}></div>}
-                          <div className="book-shelf-changer">
-                            <select
-                              value={book.shelf}
-                              onChange={(e) => moveBook(book, e.target.value)}
-                            >
-                              <option value="move" disabled>Move to...</option>
-                              <option value="currentlyReading">Currently Reading</option>
-                              <option value="wantToRead">Want to Read</option>
-                              <option value="read">Read</option>
-                              <option value="none">None</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div className="book-title">{book.title}</div>
-                        {book.authors && <div className="book-authors">{book.authors}</div>}
-                      </div>
-                    </li>
-                  ))
-                }
-              </ol>
-            </div>
-          </div>
+          <Shelf shelfName="Currently Reading" books={books.filter((book) => book.shelf === 'currentlyReading')} moveBook={moveBook} />
+          <Shelf shelfName="Want to Read" books={books.filter((book) => book.shelf === 'wantToRead')} moveBook={moveBook} />
+          <Shelf shelfName="Read" books={books.filter((book) => book.shelf === 'read')} moveBook={moveBook} />
         </div>
       </div>
       <div className="open-search">

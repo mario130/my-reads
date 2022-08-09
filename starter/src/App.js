@@ -8,6 +8,7 @@ import {Search} from "./pages/Search";
 function App() {
   const [books, setBooks] = useState([]);
   const [booksFromQuery, setBooksFromQuery] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(async() => {
     await booksApi.getAll().then((books) => {
@@ -16,7 +17,10 @@ function App() {
   }, [])
 
   const searchBooks = async (query) => {
-    if (query.trim() === "") return
+    setQuery(query);
+    if (query.trim() === "") {
+      return
+    }
     await booksApi.search(query, 10)
       .then((booksFromSearch) => {
         if (booksFromSearch.length > 0) {
@@ -56,7 +60,7 @@ function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="search" element={<Search books={booksFromQuery} moveBook={moveBookFromSearchToShelf}  searchBooks={searchBooks} />} />
+        <Route path="search" element={<Search books={booksFromQuery} moveBook={moveBookFromSearchToShelf} searchBooks={searchBooks} query={query} />} />
         <Route exact path="/" element={<BookList books={books} moveBook={moveBookToDifferentShelf} />} />
       </Routes>
     </div>
