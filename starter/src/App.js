@@ -10,18 +10,21 @@ function App() {
   const [booksFromQuery, setBooksFromQuery] = useState([]);
   const [query, setQuery] = useState("");
 
-  useEffect(async() => {
-    await booksApi.getAll().then((books) => {
+  useEffect(() => {
+    async function fetchBooks() {
+      const books = await booksApi.getAll();
       setBooks(books);
-    })
+    }
+    fetchBooks();
   }, [])
 
-  const searchBooks = async (query) => {
-    setQuery(query);
-    if (query.trim() === "") {
+  const searchBooks = (searchQuery) => {
+    setQuery(searchQuery);
+    if (searchQuery.trim() === "") {
+      setBooksFromQuery([]);
       return
     }
-    await booksApi.search(query, 10)
+    booksApi.search(searchQuery, 10)
       .then((booksFromSearch) => {
         if (booksFromSearch.length > 0) {
           // get each book's shelf

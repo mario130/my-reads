@@ -6,7 +6,7 @@ import {useEffect} from "react";
 export function Search({books, moveBook, searchBooks, query}) {
   useEffect(() => {
     searchBooks(query);
-  })
+  }, [])
 
   return (
     <div className="search-books">
@@ -25,7 +25,7 @@ export function Search({books, moveBook, searchBooks, query}) {
       <div className="search-books-results">
         <ol className="books-grid">
           {
-            books.map((book) => (<Book key={book.id} book={book} moveBook={moveBook}/>))
+            query && books.map((book) => (<Book key={book.id} book={book} moveBook={moveBook}/>))
           }
         </ol>
       </div>
